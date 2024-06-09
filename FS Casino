@@ -1,0 +1,207 @@
+using BlackjackClassLibrary;
+using Lab3;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FullSailCasino
+{
+    public class BlackjackGame
+    {
+        BlackjackHand _dealer { get; set; }
+        BlackjackHand _player { get; set; }
+        BlackjackDeck _deck { get; set; }
+        int _playerWins { get; set; }
+        int _dealerWins { get; set; }
+
+        public void PlayRound()
+        {
+            
+            _dealer = new BlackjackHand(true);
+            _player = new BlackjackHand();
+            _deck = new BlackjackDeck();
+            _deck.Shuffle();
+            DealInitialCards();
+            DrawTable();
+
+
+            if (_player.Score == 21 || _dealer.Score == 21)
+            {
+                
+                DeclareWinner();
+
+            }
+            
+            else
+            {
+                PlayersTurn();
+
+                DealersTurn();
+
+                DeclareWinner();
+            }
+
+            
+
+        }
+
+        public void DrawTable(bool reveal = false)
+        {
+            
+            Console.Clear();
+
+            Console.WriteLine("Player 1's Hand");
+            _player.Print(0, 2);
+            Console.WriteLine($"Player's Score: {_player.Score}");
+
+            Console.SetCursorPosition(left: 0, top: 5);
+            Console.WriteLine("Dealer's Hand");
+            if (reveal == true)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 9);
+                Console.WriteLine($"Dealer's Score: {_dealer.Score}");
+            }
+            
+            _dealer.Print(0, 6);
+
+            Console.SetCursorPosition(left: 40, top: 2);
+            Console.WriteLine($"Player win count: {_playerWins}");
+            Console.SetCursorPosition(left: 40, top: 5);
+            Console.WriteLine($"Dealer win count: {_dealerWins}");
+
+        }
+
+        public void DealInitialCards()
+        {
+            
+            int initialHand = 2;
+            for (int i = 0; i < initialHand; i++)
+            {
+                _player.AddCard(_deck.Deal());
+                _dealer.AddCard(_deck.Deal());
+            }
+
+
+        }
+        public void PlayersTurn()
+        {
+            
+            string play = "Player 1, hit or stand:";
+            string response;
+            while (_player.Score < 21)
+            {
+                Console.SetCursorPosition(left: 0, top: 10);
+                Console.WriteLine($"{play.PadLeft(30)}");
+                response = Console.ReadLine();
+
+
+                if (response == "hit")
+                {
+                    Console.Clear();
+                    _player.AddCard(_deck.Deal());
+                    DrawTable(false);
+
+
+                }
+                else if (response == "stand")
+                {
+                    break;
+                }
+            }
+            if (_player.Score >= 21)
+            {
+                
+                DeclareWinner();
+
+            }
+        }
+
+
+        public void DealersTurn()
+        {           
+
+            Console.Write($"Dealers score: {_dealer.Score}");
+            
+            while (_dealer.Score < 17)
+            {
+                Console.Clear();
+                _dealer.AddCard(_deck.Deal());
+                DrawTable(true);
+               
+                if (_dealer.Score > 21)
+                {                   
+                    break;
+                }
+            }
+
+            
+                
+
+
+           
+        }
+        public void DeclareWinner()
+        {
+            
+
+            DrawTable(true);
+            if (_player.Score > 21)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 12);
+                Console.WriteLine("Dealer wins!");
+                _dealerWins++;
+
+                
+                Console.ReadKey();
+            }
+            else if (_dealer.Score > 21)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 12);
+                Console.WriteLine("Player 1 wins!");
+                _playerWins++;
+               
+                Console.ReadKey();
+            }
+            else if (_player.Score > _dealer.Score)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 12);
+                Console.WriteLine("Player 1 wins!");
+                _playerWins++;
+
+               
+                Console.ReadKey();
+            }
+            else if (_dealer.Score > _player.Score)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 12);
+                Console.WriteLine("Dealer wins!");
+                _dealerWins++;
+                Console.ReadKey();
+            }
+            else if (_dealer.Score == _player.Score)
+            {
+                _dealer.Reveal(0, 6);
+                Console.SetCursorPosition(0, 12);
+                Console.WriteLine("It's a tie");
+                Console.ReadKey();
+            }
+
+        }
+        public void DrawWins()
+        {
+            
+                 _playerWins = 0;
+
+                 _dealerWins = 0;
+            
+
+        }
+    }
+}
