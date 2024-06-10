@@ -1,0 +1,94 @@
+/*Remove Margin + Padding */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+/* Headlines + Paragraphs */
+
+h1,
+h2,
+h3 {
+    font-family: Oswald, Arial, Helvetica;
+}
+
+h1 {
+    font-size: 72px;
+    color: #ffffff;
+    padding-left: 63%;
+}
+
+h2 {
+    font-size: 36px;
+    color: #409ec1;
+}
+
+h3 {
+    font-size: 18px;
+    color: #bab1a6;
+    padding-top: 7px;
+}
+
+.header_content,
+.main_info,
+.sidebar_text {
+    font-family: Arial, Helvetica;
+}
+
+.header_content {
+    font-size: 18px;
+    line-height: 1.5ems;
+    text-align: justify;
+    color: #ffffff;
+}
+
+.main_info {
+    font-size: 16px;
+    color: #333;
+    padding: 25px 25px 0 0;
+}
+
+.sidebar_text {
+    font-size: 12px;
+    line-height: 1.8em;
+    color: #000;
+    padding: 24px 25px 0 0;
+}
+
+/* Layout */
+.containter {
+    width: 960px;
+    margin: 0 auto 0 auto;
+}
+
+.top {
+    background-color: #333;
+}
+
+.main {
+    width: 75%;
+    float: left;
+    padding: 50px 25px 75px 0;
+}
+
+.sidebar {
+    width: 25%;
+    float: left;
+    padding: 65px 0 75px 0;
+}
+
+img {
+    max-width: 75%;
+    height: auto;
+    float: left;
+    padding-right: 50px;
+}
+
+.photo-content {
+    padding: 235px 25px 50px 0;
+    margin-bottom: 50px;
+}
